@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         fetchContent() {
-            fetch(`/pages/${this.id}`)
+            fetch(`/pages/${this.id}.json`)
                 .then(raw => raw.json())
                 .then(p => {
                     this._page = p

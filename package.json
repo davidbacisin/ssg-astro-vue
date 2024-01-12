@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "ssg-astro-vue",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@astrojs/vue": "^4.0.8",
+    "@unhead/ssr": "^1.8.9",
+    "@unhead/vue": "^1.8.9",
     "astro": "^4.1.1",
     "vue": "^3.4.7"
   }
