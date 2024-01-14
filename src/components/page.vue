@@ -1,5 +1,9 @@
 <template>
     <main v-html="_page?.content"></main>
+    <ul>
+        <li><RouterLink :to="{name: 'page', params: { id: 'intro' } }">Introduction</RouterLink></li>
+        <li><RouterLink :to="{name: 'page', params: { id: 'key-concepts' } }">Key Concepts</RouterLink></li>
+    </ul>
 </template>
 
 <script lang="ts">
@@ -43,10 +47,11 @@ export default {
         );
     },
     async serverPrefetch() {
-        let raw = await import(/* @vite-ignore */`../../public/pages/${this.id}`, {
-            assert: { type: 'json' }
-        })
-        this._page = raw.default;
+        if (import.meta.env.SSR) {
+            let { readFileSync } = await import('fs');
+            let raw = readFileSync(`./public/pages/${this.id}.json`);
+            this._page = JSON.parse(raw);
+        }
     },
     methods: {
         fetchContent() {

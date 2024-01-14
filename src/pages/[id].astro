@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Head from '@/components/head.vue';
+import App from '@/components/app.vue';
+
+export const getStaticPaths = (() => [
+    {params: {id: 'intro'}},
+    {params: {id: 'key-concepts'}},
+]) satisfies GetStaticPaths;
+
+let { id } = Astro.params;
+if (!id) {
+    id = 'intro';
+}
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<Head route="page" params={{id}} />
+	</head>
+	<body>
+		<App client:load route="page" params={{id}} />
+	</body>
+</html>

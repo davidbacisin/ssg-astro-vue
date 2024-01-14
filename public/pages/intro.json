@@ -1,5 +1,5 @@
 {
     "id": "intro",
-    "title": "Introduction",
-    "content": "Hello, world!"
+    "title": "What is SSG Astro Vue?",
+    "content": "SSG Astro Vue is a simple example showing how to use Astro for server-side generation of a Vue 3 project."
 }
