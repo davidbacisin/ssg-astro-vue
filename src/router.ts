@@ -30,4 +30,4 @@ const initHead = (app: App<any>): VueHeadClient<MergeHead> => {
     return head;
 }
 
-export { routes, initRouter, initHead };
+export { initRouter, initHead };

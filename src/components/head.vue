@@ -1,9 +1,18 @@
 <script lang="ts">
-import { Static, defineAsyncComponent, getCurrentInstance, h, ssrUtils } from 'vue';
+import { 
+    type Component,
+    compile,
+    defineAsyncComponent,
+    getCurrentInstance,
+    h,
+    ssrUtils,
+} from 'vue';
 import { type RouteLocationNormalizedLoaded } from 'vue-router';
 import { renderSSRHead } from '@unhead/ssr';
 import { useHead } from '@unhead/vue';
 import { initHead, initRouter } from '@/router';
+
+let { createComponentInstance, setupComponent } = ssrUtils;
 
 export default {
     props: {
@@ -27,14 +36,11 @@ export default {
             params: props.params,
         }) as RouteLocationNormalizedLoaded;
 
-        const matchedComponent = matchedRoute.matched[0]?.components?.default;
+        const matchedComponent = matchedRoute.matched[0]?.components?.default as Component;
 
         return () => { 
-            let tmp = h(matchedComponent, props.params)
-            
-            let { createComponentInstance, setupComponent } = ssrUtils;
-            let instance = createComponentInstance(tmp, tmp.ctx, null);
-            
+            let n = h(matchedComponent, props.params)
+            let instance = createComponentInstance(n, n.ctx, null);
             let c = defineAsyncComponent(async () => {
                 let res = setupComponent(instance, true);
                 let prefetches = instance.sp;
@@ -45,7 +51,7 @@ export default {
                     return renderSSRHead(head)
                 });
 
-                return h(Static, p.headTags);
+                return h(compile(p.headTags));
             })
 
             return h(c)
